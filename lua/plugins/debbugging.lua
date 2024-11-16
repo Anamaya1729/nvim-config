@@ -1,10 +1,16 @@
 return {
 	{
 		"mfussenegger/nvim-dap",
-		dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio", "rcarriga/nvim-dap-ui" },
+		dependencies = {
+			"mfussenegger/nvim-dap",
+			"nvim-neotest/nvim-nio",
+			"rcarriga/nvim-dap-ui",
+			"mfussenegger/nvim-dap-python",
+		},
 		config = function()
+			require("dap-python").setup("~/.virtualenvs/debugpy/bin/python")
+            require("dapui").setup() 
 			local dap, dapui = require("dap"), require("dapui")
-
 			dap.listeners.before.attach.dapui_config = function()
 				dapui.open()
 			end
@@ -21,5 +27,4 @@ return {
 			vim.keymap.set("n", "<Leader>dc", dap.continue, { desc = "skips the breakpoint" })
 		end,
 	},
-	{ "mfussenegger/nvim-dap-python" },
 }
